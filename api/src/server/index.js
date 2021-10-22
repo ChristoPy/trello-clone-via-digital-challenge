@@ -9,7 +9,7 @@ export default () => {
   server.listen(process.env.PORT, (error) => {
     if (!error) return
 
-    server.log.error(err);
+    server.log.error(error);
     process.exit(1);
   });
 };
