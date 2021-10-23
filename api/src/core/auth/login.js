@@ -1,10 +1,11 @@
-import { checkPassword } from "../../utils/crypto.js";
+import { checkPassword, createSessionToken } from "../../utils/crypto.js";
+import { createUserModel } from "../../utils/user.js";
 
 const { client, query } = process.persistent;
 
 const getUserByEmail = (email) => client.query(
   query.Get(query.Match(query.Index("find_user_by_email"), email))
-);
+).catch(() => false);
 
 export default async ({ body }, response) => {
   response.type("application/json");
@@ -25,14 +26,8 @@ export default async ({ body }, response) => {
     return;
   }
 
-  const userData = {
-    user: {
-      id: userFound.ref.id,
-      name: userFound.data.name,
-      email: userFound.data.email,
-    },
-  };
+  const sessionToken = await createSessionToken(userFound.ref.id);
 
   response.status(200);
-  response.send(userData);
+  response.send(createUserModel(userFound, sessionToken));
 };

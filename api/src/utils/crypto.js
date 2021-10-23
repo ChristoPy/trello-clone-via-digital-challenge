@@ -1,11 +1,34 @@
-import { scrypt, randomBytes } from "crypto";
+import { scrypt, randomBytes, createCipheriv } from "crypto";
+import moment from "moment";
 
 const {
   SALT_BYTES,
   SALT_LENGTH,
   PEPPER,
   HASH_LENGTH,
+  IV,
+  ENCRYPTION_ALGORITHM,
+  ENCRYPTION_KEY
 } = process.env;
+
+const encrypt = (text) => {
+  const iv = Buffer.from(IV, 'hex')
+  const cipher = createCipheriv(ENCRYPTION_ALGORITHM, ENCRYPTION_KEY, iv);
+  const encrypted = Buffer.concat([cipher.update(text), cipher.final()]);
+
+  return Buffer.concat([iv, encrypted]).toString('base64')
+};
+
+const decrypt = (token) => {
+  const combined = Buffer.from(token, 'base64').toString('hex')
+  const iv = combined.slice(0, 32)
+  const content = combined.slice(32, combined.length)
+
+  const decipher = crypto.createDecipheriv(ENCRYPTION_ALGORITHM, ENCRYPTION_KEY, Buffer.from(iv, 'hex'));
+  const decrypted = Buffer.concat([decipher.update(Buffer.from(content, 'hex')), decipher.final()]);
+
+  return decrypted.toString();
+};
 
 const createHash = (candidate, salt, resolve, reject) => {
   const seasoned = candidate + PEPPER;
@@ -34,3 +57,20 @@ export const checkPassword = async (candidate, hash) => new Promise((resolve, re
   };
   createHash(candidate, salt, checkEquals, reject);
 });
+
+export const createSessionToken = async (userId) => new Promise((resolve, reject) => {
+  const configuredToken = {
+    userId,
+    expiry: moment().add(15, 'minutes').unix()
+  }
+  const encryptedToken = encrypt(JSON.stringify(configuredToken))
+
+  resolve(encryptedToken)
+})
+
+export const validateSessionToken = async (token) => new Promise((resolve, reject) => {
+  const decryptedToken = JSON.parse(decrypt(token))
+
+  decryptedToken.expiry >= moment().unix() ? resolve(decryptedToken) : reject(decryptedToken)
+})
+
