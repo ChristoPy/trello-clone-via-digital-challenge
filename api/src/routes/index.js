@@ -1,5 +1,5 @@
-import Auth from "./auth/index.js";
+import auth from "./auth/index.js";
 
-const ROUTES = [...Auth];
+const ROUTES = [...auth];
 
 export default (fastify) => ROUTES.forEach((route) => fastify.route(route));

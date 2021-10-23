@@ -1,20 +1,17 @@
-import Login from "../../core/auth/login.js";
+import login from "../../core/auth/login.js";
+import { EMAIL_SCHEMA, PASSWORD_SCHEMA } from "./shared.js";
 
 export default {
   url: "/auth/login",
   method: "POST",
-  handler: Login,
+  handler: login,
   schema: {
     body: {
       required: ["email", "password"],
       properties: {
-        email: {
-          type: "string",
-        },
-        password: {
-          type: "string",
-        },
-      }
+        email: EMAIL_SCHEMA,
+        password: PASSWORD_SCHEMA,
+      },
     },
   },
 };
