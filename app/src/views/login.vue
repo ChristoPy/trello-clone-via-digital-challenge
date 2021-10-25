@@ -6,34 +6,65 @@
           Entrar
         </h2>
       </div>
-      <form class="mt-8 space-y-6" action="#" method="POST">
+      <form class="mt-8 space-y-6" @submit.prevent="logIn">
         <div>
           <div class="form-control">
             <label class="label">
               <span class="label-text">E-mail</span>
             </label> 
-            <input type="text" placeholder="email@exemplo.com" class="input input-bordered">
+            <input
+              required
+              type="email"
+              placeholder="email@exemplo.com"
+              class="input input-bordered"
+              v-model="form.email"
+            >
           </div>
           <div class="form-control">
             <label class="label">
               <span class="label-text">Senha</span>
             </label> 
-            <input type="text" placeholder="***" class="input input-bordered">
+            <input
+              required
+              type="password"
+              placeholder="***"
+              class="input input-bordered"
+              v-model="form.password"
+            >
           </div>
         </div>
         <div>
-          <button class="btn btn-block btn-primary">ok</button>
+          <button type="submit" class="btn btn-block btn-primary">ok</button>
         </div>
       </form>
       <p class="mt-2 text-center">
-        <a class="link link-primary">não tenho conta</a>
+        <router-link class="link link-primary" to="register">não tenho conta</router-link>
       </p>
     </div>
   </div>
 </template>
 
 <script>
+import { reactive, inject } from 'vue'
+import { authStateSymbol } from '@/contexts/auth'
+
 export default {
   name: 'Login',
+  setup() {
+    const auth = inject(authStateSymbol)
+    const form = reactive({
+      email: '',
+      password: ''
+    })
+
+    const logIn = () => {
+      auth.logIn(form)
+    }
+
+    return {
+      form,
+      logIn,
+    }
+  }
 }
 </script>
