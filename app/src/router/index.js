@@ -1,4 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router";
+import board from "@/views/board.vue";
 import home from "@/views/home.vue";
 import login from "@/views/login.vue";
 import register from "@/views/register.vue";
@@ -9,6 +10,13 @@ const routes = [
     name: "home",
     component: home,
     meta: { closed: true },
+  },
+  {
+    path: "/board/:id",
+    name: "board",
+    component: board,
+    meta: { closed: true },
+    props: true
   },
   {
     path: "/login",

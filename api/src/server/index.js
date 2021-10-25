@@ -1,4 +1,5 @@
 import fastify from "fastify";
+import cors from "fastify-cors";
 
 const setupRoutes = async (server) =>
   import("../routes/index.js").then((module) => {
@@ -8,6 +9,10 @@ const setupRoutes = async (server) =>
 
 export default async () => {
   const server = fastify({ logger: true });
+
+  server.register(cors, {
+    origin:'*',
+  })
 
   await setupRoutes(server);
 
