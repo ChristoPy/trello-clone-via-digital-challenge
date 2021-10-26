@@ -1,0 +1,40 @@
+@import url("https://cdn.jsdelivr.net/npm/daisyui@1.16.0/dist/full.css");
+@import url("https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css");
+
+/* disable dark theme for now */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --p: 259 94.4% 51.2%;
+    --pf: 259 94.3% 41%;
+    --pc: 0 0% 100%;
+    --s: 314 100% 47.1%;
+    --sf: 314 100% 37.1%;
+    --sc: 0 0% 100%;
+    --a: 174 60% 51%;
+    --af: 174 59.8% 41%;
+    --ac: 0 0% 100%;
+    --n: 219 14.1% 27.8%;
+    --nf: 222 13.4% 19%;
+    --nc: 0 0% 100%;
+    --b1: 0 0% 100%;
+    --b2: 210 20% 98%;
+    --b3: 216 12.2% 83.9%;
+    --bc: 215 27.9% 16.9%;
+    --in: 207 89.8% 53.9%;
+    --su: 174 100% 29%;
+    --wa: 36 100% 50%;
+    --er: 14 100% 57.1%;
+    --border-color: var(--b3);
+    --rounded-box: 1rem;
+    --rounded-btn: 0.5rem;
+    --rounded-badge: 1.9rem;
+    --animation-btn: 0.25s;
+    --animation-input: 0.2s;
+    --btn-text-case: uppercase;
+    --btn-focus-scale: 0.95;
+    --navbar-padding: 0.5rem;
+    --border-btn: 1px;
+    --tab-border: 1px;
+    --tab-radius: 0.5rem;
+  }
+}
