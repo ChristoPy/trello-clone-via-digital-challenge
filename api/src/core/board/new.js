@@ -6,7 +6,7 @@ const createBoard = (data) => client.query(
   query.Create(query.Collection("boards"), {
     data: {
       ...data,
-      collumns: []
+      columns: []
     },
   }),
 ).catch(() => false);

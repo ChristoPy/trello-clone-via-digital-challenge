@@ -1,4 +1,5 @@
-export const createColumnModel = (name) => ({
-  name,
+export const createColumnModel = (column) => ({
+  id: column.ref.id,
+  name: column.data.name,
   cards: [],
 });
