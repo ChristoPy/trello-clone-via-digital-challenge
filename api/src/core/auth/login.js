@@ -1,5 +1,5 @@
 import { checkPassword, createSessionToken } from "../../utils/crypto.js";
-import { createUserModel } from "../../utils/user.js";
+import { createUserModel } from "../../models/user.js";
 
 const { client, query } = process.persistent;
 

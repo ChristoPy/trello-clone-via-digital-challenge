@@ -1,4 +1,11 @@
 import { createApp } from 'vue'
+import { authStateSymbol, createAuthState } from './contexts/auth'
 import App from './App.vue'
+import router from './router'
 
-createApp(App).mount('#app')
+import './index.css'
+
+createApp(App)
+  .provide(authStateSymbol, createAuthState())
+  .use(router)
+  .mount('#app')

@@ -1,26 +1,37 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <Header/>
+  <div class="bg-base-200">
+    <router-view/>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { inject, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { authStateSymbol } from '@/contexts/auth'
+import Header from '@/components/header.vue'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  components: { Header },
+  setup() {
+    const route = useRoute()
+    const router = useRouter()
+    const auth = inject(authStateSymbol)
+
+    const tryBlockAccess = () => {
+      if (!auth.state.user && route.meta.closed && route.name !== 'login') {
+        router.replace({ name: 'login' })
+      }
+    }
+    const tryRedirectToHome = () => {
+      if (auth.state.user && auth.state.tokens && !route.meta.closed) {
+        router.replace({ name: 'home' })
+      }
+    }
+
+    watch(auth.state, tryRedirectToHome)
+    watch(route, tryBlockAccess)
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
