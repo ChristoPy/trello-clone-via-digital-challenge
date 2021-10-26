@@ -34,7 +34,7 @@
           </div>
         </div>
         <div>
-          <button type="submit" class="btn btn-block btn-primary">ok</button>
+          <TButton type="submit" :loading="loggingIn">ok</TButton>
         </div>
       </form>
       <p class="mt-2 text-center">
@@ -45,25 +45,30 @@
 </template>
 
 <script>
-import { reactive, inject } from 'vue'
+import { reactive, inject, ref } from 'vue'
 import { authStateSymbol } from '@/contexts/auth'
+import TButton from '@/components/t-button.vue'
 
 export default {
   name: 'Login',
+  components: { TButton },
   setup() {
     const auth = inject(authStateSymbol)
+    const loggingIn = ref(false)
     const form = reactive({
       email: '',
       password: ''
     })
 
     const logIn = () => {
+      loggingIn.value = true
       auth.logIn(form)
     }
 
     return {
       form,
       logIn,
+      loggingIn,
     }
   }
 }

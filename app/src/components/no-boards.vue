@@ -22,7 +22,7 @@ export default {
   setup() {
     const auth = inject(authStateSymbol)
 
-    const noBoards = computed(() => !auth.state.boards)
+    const noBoards = computed(() => !auth.state.boards.length)
 
     const creatingNewBoard = ref(false)
     const newBoardName = ref('')

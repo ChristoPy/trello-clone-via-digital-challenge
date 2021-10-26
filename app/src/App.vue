@@ -25,7 +25,7 @@ export default {
       }
     }
     const tryRedirectToHome = () => {
-      if (auth.state.user && auth.state.tokens && route.name !== 'home') {
+      if (auth.state.user && auth.state.tokens && !route.meta.closed) {
         router.replace({ name: 'home' })
       }
     }

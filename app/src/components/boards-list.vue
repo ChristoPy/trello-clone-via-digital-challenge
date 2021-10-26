@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-md w-full space-y-12" v-if="boards">
+  <div class="max-w-md w-full space-y-12" v-if="boards.length">
     <h2 class="mt-6 text-center text-4xl font-extrabold text-gray-900">
       Suas boards
     </h2>
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { inject } from 'vue'
+import { computed, inject } from 'vue'
 import { useRouter } from 'vue-router'
 import { authStateSymbol } from '@/contexts/auth'
 
@@ -34,10 +34,11 @@ export default {
     const router = useRouter()
 
     const goToBoard = (id) => router.push({ name: 'board', params: { id } })
+    const boards = computed(() => auth.state.boards)
 
     return {
       goToBoard,
-      boards: auth.state.boards,
+      boards,
     }
   }
 }

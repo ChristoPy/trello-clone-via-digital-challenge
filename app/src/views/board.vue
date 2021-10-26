@@ -1,19 +1,22 @@
 <template>
-  <NoColumns/>
   <Columns :id="id"/>
+  <NewCardModal/>
+  <NewColumnModal/>
 </template>
 
 <script>
 import { inject } from 'vue'
 import { authStateSymbol } from '@/contexts/auth'
-import NoColumns from '@/components/no-columns.vue'
 import Columns from '@/components/columns.vue'
+import NewCardModal from '@/components/new-card-modal.vue'
+import NewColumnModal from '@/components/new-column-modal.vue'
 
 export default {
   name: 'Board',
   components: {
-    NoColumns,
-    Columns
+    Columns,
+    NewCardModal,
+    NewColumnModal
   },
   props: {
     id: {
